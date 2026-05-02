@@ -122,7 +122,7 @@ The streaming-vs-non-streaming behavior is the part most people get wrong. To be
 | completions | short factual ("capital of France") | 5 | 8 | 6.34 *(8 tokens, dominated by first-token overhead)* |
 | chat | 25K-token long-context synthesis | ~22 000 | up to 2 048 | not captured cleanly  -  *see [Honest limitations](#%EF%B8%8F-honest-limitations)* |
 
-> Wall-clock client-side. `temperature=0`, max-num-seqs=1, single-stream. The vLLM engine logs report ~25-27 t/s internal (excludes round-trip + initial prefill). Run yourself: `python3 test/bench_full.py`. Raw results: [`test/bench_full_results.json`](test/bench_full_results.json).
+> Wall-clock client-side. `temperature=0`, max-num-seqs=1, single-stream. The vLLM engine logs report ~25-27 t/s internal (excludes round-trip + initial prefill). Run yourself: `python3 test/bench_full.py` (writes raw results to `test/bench_full_results.json`, gitignored).
 
 ---
 
