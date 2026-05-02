@@ -1181,6 +1181,33 @@ except Exception:
             p_dispatch.write_text(txt)
             print(" -> Patched vllm/model_executor/kernels/linear/__init__.py (Patch 16: AWQ-INT4 MMQ HIP)")
 
+    # Patch 17 (local): drop vLLM's half/half2 atomicAdd polyfills on ROCm.
+    #
+    # csrc/quantization/gptq/compat.cuh ships polyfills
+    #   __device__ void atomicAdd(half*  address, half  val)
+    #   __device__ void atomicAdd(half2* address, half2 val)
+    # gated on `#if defined(__CUDA_ARCH__) || defined(USE_ROCM)`. ROCm 7.13
+    # nightlies (post 7.13.0a20260426) added builtins
+    #   __device__ __half  atomicAdd(__half*  const, const __half)   @ amd_hip_fp16.h:869
+    #   __device__ __half2 atomicAdd(__half2* const, const __half2)  @ amd_hip_fp16.h:875
+    # With both the polyfill and the builtin visible, clang reports
+    # "call to 'atomicAdd' is ambiguous" in q_gemm.hip (10 sites).
+    #
+    # Fix: change the outermost guard to drop the entire ROCm path through
+    # this overload region. The polyfills are now CUDA-only; ROCm uses the
+    # HIP builtins exclusively. The named helpers atomicAdd_half /
+    # atomicAdd_half2 (defined above the guard) are untouched in case any
+    # other vLLM source calls them by name.
+    p_compat = Path('csrc/quantization/gptq/compat.cuh')
+    if p_compat.exists():
+        txt = p_compat.read_text()
+        old_guard = "#if defined(__CUDA_ARCH__) || defined(USE_ROCM)\n"
+        new_guard = "#if defined(__CUDA_ARCH__)\n"
+        if old_guard in txt:
+            txt = txt.replace(old_guard, new_guard, 1)
+            p_compat.write_text(txt)
+            print(" -> Patched csrc/quantization/gptq/compat.cuh (Patch 17: drop atomicAdd half/half2 polyfills on ROCm)")
+
     print("Successfully patched vLLM/Environment for Strix Halo.")
 
 if __name__ == "__main__":
